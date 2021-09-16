@@ -9,7 +9,8 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-		
+		<script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-firestore.js"></script>
 		<title>Document</title>
 	</head>
 	<body>
@@ -19,39 +20,40 @@
 				<a href="#" class="brand-logo right">Todo</a>
 			</div>
 		</nav>
-
 		<div class="container">
 			<form id="add-todo-form">
 				<input type="text" name="title" placeholder="Add Task">
-				<a class="waves-effect waves-light btn">Add Task</a>
+				<button class="waves-effect waves-light btn">Add Task</button>
 			</form>
-
-			<ul class="collection">
-				<li class="collection-item">
-					<div><span>Buying food</span>
-					<i class="material-icons secondary-content">delete</i>
-					<a href="#modal1" class="modal-trigger secondary-content"> <i class="material-icons ">edit</i></a>
+			<ul id="todo-list" class="collection todo-list">
+				
+			</ul>
+			<!-- Modal Structure -->
+			<div id="modal1" class="modal">
+				<div class="modal-content">
+					<h4>Modal Header</h4>
+					<p>A bunch of text</p>
 				</div>
-			</li>
-		</ul>
-
-		<!-- Modal Structure -->
-		<div id="modal1" class="modal">
-			<div class="modal-content">
-				<h4>Modal Header</h4>
-				<p>A bunch of text</p>
-			</div>
-			<div class="modal-footer">
-				<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+				<div class="modal-footer">
+					<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+				</div>
 			</div>
 		</div>
-	</div>
-	
-	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-			var elems = document.querySelectorAll('.modal');
-			var instances = M.Modal.init(elems);
-		});
-	</script>
-</body>
+		
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				var elems = document.querySelectorAll('.modal');
+				var instances = M.Modal.init(elems);
+			});
+			// <!-- Aqui va 'firebaseConfig' que te proporciona Firebase  -->
+			const firebaseConfig = {
+				
+			};
+			// <!--  -->
+		
+			firebase.initializeApp(firebaseConfig);
+			const db = firebase.firestore();
+		</script>
+		<script src="app.js"></script>
+	</body>
 </html>
