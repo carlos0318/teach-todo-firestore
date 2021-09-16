@@ -7,6 +7,9 @@
 
 const todoList = document.querySelector('#todo-list');
 const form = document.querySelector('#add-todo-form');
+const updateBtn = document.querySelector('#update');
+let newTitle = '';
+let updateId = null;
 
 const renderList = (doc) => {
 	let li = document.createElement('li');
@@ -42,7 +45,7 @@ const renderList = (doc) => {
 	});
 
 	editBtn.addEventListener('click', e => {
-		console.log('modified');
+		updateId = e.target.parentElement.parentElement.parentElement.getAttribute('data-id');
 	});
 
 	todoList.append(li);
@@ -57,6 +60,13 @@ form.addEventListener('submit', e => {
 	form.title.value = '';
 });
 
+updateBtn.addEventListener('click', e => {
+	newTitle = document.getElementsByName('newtitle')[0].value;
+	db.collection('todos').doc(updateId).update({
+		title: newTitle
+	})
+});
+
 db.collection('todos').orderBy('title').onSnapshot(snapshot => {
 	let changes = snapshot.docChanges();
 	changes.forEach(change =>  {
@@ -66,7 +76,9 @@ db.collection('todos').orderBy('title').onSnapshot(snapshot => {
 			let li = todoList.querySelector(`[data-id=${change.doc.id}]`);
 			todoList.removeChild(li);			
 		}else if(change.type == 'modified'){
-			console.log('modified');
+			let li = todoList.querySelector(`[data-id=${change.doc.id}]`);
+			li.getElementsByTagName('span')[0].textContent = newTitle;
+			newTitle = '';
 		}
 	});
 });
